@@ -1,0 +1,27 @@
+package br.edu.ifpe.discente.comandos.livro;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import br.edu.ifpe.discente.comandos.Command;
+import br.edu.ifpe.discente.domain.repository.LivroDAO;
+import br.edu.ifpe.discente.utils.Constante;
+
+public class EditarLivroCommand implements Command {
+	
+	private LivroDAO dao;
+
+	public EditarLivroCommand(LivroDAO dao) {
+		super();
+		this.dao = dao;
+	}
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		var id = request.getParameter("id");
+		var livro = dao.listarPorId(Integer.parseInt(id));
+		request.setAttribute("livro", livro);
+		return Constante.CONTROLA_LIVROS;
+	}
+
+}
